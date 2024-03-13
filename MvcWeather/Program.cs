@@ -2,11 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient("OpenWeatherMap", client =>
-{
-    client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/");
-});
-
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
