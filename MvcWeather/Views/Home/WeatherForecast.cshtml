@@ -1,0 +1,36 @@
+@model WeatherViewModel
+
+@{
+    ViewData["Title"] = "WeatherForecast";
+}
+
+<h1>WeatherForecast</h1>
+
+<p>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="WeatherForecast" asp-route-city="">Search City</a>
+    <input id="city_input" type="text" placeholder="Enter City">
+</p>
+
+@if (@Model != null)
+{
+    <p>Temp: @Model.Main.Temp</p>
+    <p>Feels Like: @Model.Main.FeelsLike</p>
+    <p>Min Temp: @Model.Main.TempMin</p>
+    <p>Max Temp: @Model.Main.TempMax</p>
+    <p>Pressure: @Model.Main.Pressure</p>
+    <p>Humidity: @Model.Main.Humidity</p>
+
+    @foreach (var item in Model.Weather)
+    {
+        <p>@item.Main</p>
+        <p>@item.Description</p>
+        <p>@item.Icon</p>
+    }
+    <p>Wind Speed: @Model.Wind.Speed</p>
+    <p>Wind Deg: @Model.Wind.Deg</p>
+    <p>Wind Gust: @Model.Wind.Gust</p>
+
+    <p>Chance of Rain: @Model.Pop</p>
+    <p>Rain fall in the last 3 hours: @Model.Rain</p>
+
+}

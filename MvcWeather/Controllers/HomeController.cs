@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using MvcWeather.Models;
@@ -37,23 +38,29 @@ public class HomeController : Controller
 
         var URl = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
 
-        var httpClient = new HttpClient();
-        var response = await httpClient.GetAsync(URl);
+        var response = await _httpClient.GetAsync(URl);
 
         return await response.Content.ReadAsStringAsync();
     }
 
-    public async Task<IActionResult> WeatherForecast(string city)
+    [Route("Home/WeatherForecast")]
+    public async Task<IActionResult> WeatherForecast([FromQuery]string city)
     {
-        string apiKey = "653912153a71c74890bef39355554678";
+        if (string.IsNullOrEmpty(city))
+        {
+            return View();
+        }
 
-        var URl = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
+        string apiKey = "653912153a71c74890bef39355554678";
+        string units = "metric";
+
+        var URl = $"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units={units}";
 
         var response = await _httpClient.GetAsync(URl);
         var responseContent = await response.Content.ReadAsStringAsync();
 
-        Forecast? weatherForecast =
-                JsonSerializer.Deserialize<Forecast>(responseContent);
+        WeatherViewModel? weatherForecast =
+                JsonSerializer.Deserialize<WeatherViewModel>(responseContent);
 
         return View(weatherForecast);
     }
