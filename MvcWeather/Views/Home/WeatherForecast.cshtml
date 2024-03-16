@@ -32,5 +32,14 @@
 
     <p>Chance of Rain: @Model.Pop</p>
     <p>Rain fall in the last 3 hours: @Model.Rain</p>
+}
 
+@section Scripts {
+    <script>
+        document.querySelector(".btn-primary").addEventListener("click", function () {
+            var cityInput = document.getElementById("city_input").value;
+            var searchLink = document.querySelector(".btn-primary");
+            searchLink.href = `/Home/WeatherForecast?city=${encodeURIComponent(cityInput)}`;
+        });
+    </script>
 }

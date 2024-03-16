@@ -32,17 +32,6 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public async Task<string> GetStringAsync(string city)
-    {
-        string apiKey = "653912153a71c74890bef39355554678";
-
-        var URl = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
-
-        var response = await _httpClient.GetAsync(URl);
-
-        return await response.Content.ReadAsStringAsync();
-    }
-
     [Route("Home/WeatherForecast")]
     public async Task<IActionResult> WeatherForecast([FromQuery]string city)
     {
